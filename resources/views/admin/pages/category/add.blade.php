@@ -17,6 +17,7 @@
                     <label>Name</label>
                     <input class="form-control" placeholder="Nhập category" name="name">
                 </div>
+                <span class="error" style="color:red;font-size:1rem"></span>
                 <div class="form-group">
                     <label>Status</label>
                     <select class="form-control" name="status">

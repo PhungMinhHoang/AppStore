@@ -35,9 +35,9 @@
                         @foreach ($category as $key => $value)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$value->name}}</td>
-                                <td>{{$value->slug}}</td>
-                                <td>
+                                <td class="td-name">{{$value->name}}</td>
+                                <td class="td-slug">{{$value->slug}}</td>
+                                <td class="td-status" data-status={{$value->status}}>
                                     @if ($value->status == 1)
                                         {{'Hiển thị'}}
                                     @else
@@ -79,12 +79,13 @@
                 <div class="modal-body">
                     <div class="row" style="margin:5px">
                         <div class="col-lg-12">
-                            <form role="form" method="POST">
+                            <form role="form">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control name" placeholder="Nhập category" name="name">
+                                    <span class="error" style="color:red;font-size:1rem"></span>
                                 </div>
-                                <span class="error" style="color:red;font-size:1rem"></span>
+                                
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select class="form-control status" name="status">
@@ -116,10 +117,14 @@
                     </button>
                 </div>
                 <div class="modal-body" style="margin-left: 183px;">
-                    <button type="button" class="btn btn-success">Có</button>
+                    <button type="button" class="btn btn-success del">Có</button>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
                 <div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="assets/admin/js/ajaxCategory.js"></script>
 @endsection

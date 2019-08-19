@@ -10,8 +10,9 @@ class ProductType extends Model
         'idCategory', 'name', 'slug', 'status'
     ];
 
-    public function Product()
+    public function Category()
     {
-        return $this->belongsTo('App\Models\Product','idProduct','id');
+        return $this->belongsTo('App\Models\Category','idCategory','id');
     }
+
 }

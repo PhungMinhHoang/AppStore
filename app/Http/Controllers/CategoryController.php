@@ -55,7 +55,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        dd($category);
     }
 
     /**
@@ -78,16 +78,31 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $validator = Validator::make($request->all(),
+        if($request->name == $category->name){
+            $validator = Validator::make($request->all(),
+                [
+                    'name' => 'required|min:2|max:255'
+                ],
+                [
+                    'required' => 'Tên danh mục sản phẩm không được để trống',
+                    'min' => 'Tên danh mục sản phẩm phải từ 2-255 ký tự',
+                    'max' => 'Tên danh mục sản phẩm phải từ 2-255 ký tự',
+                ]
+            );
+        }
+        else{
+            $validator = Validator::make($request->all(),
             [
-                'name' => 'required|min:2|max:255'
+                'name' => 'required|min:2|max:255|unique:categories'
             ],
             [
                 'required' => 'Tên danh mục sản phẩm không được để trống',
                 'min' => 'Tên danh mục sản phẩm phải từ 2-255 ký tự',
                 'max' => 'Tên danh mục sản phẩm phải từ 2-255 ký tự',
+                'unique' => 'Tên category đã tồn tại',
             ]
         );
+        }
         if($validator->fails()){
             return response()->json(['error'=> 'true','message'=>$validator->errors()],200);
         }
@@ -96,7 +111,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->name,'-'),
             'status'=> $request->status,
         ]);
-        return response()->json(['success'=>'Sửa thành công']);
+        return response()->json(['success'=>'Sửa thành công','data' =>$category]);
     }
 
     /**
@@ -107,6 +122,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->json(['message'=>'Xóa thành công']);
+
     }
 }
